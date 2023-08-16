@@ -21,7 +21,7 @@ const getLatestNews = async () => {
 const getNews = async () => {
   try {
     let header = new Headers({
-      "x-api-key": "czuvX4YVIbF4l6ilgP8hdGzowMzkO5gQ4OYX_q7zfws",
+      "x-api-key": "QiJLxU9vYgW8VGflvh2CCchfUS1G2r3iydWAJCJInJk",
     });
     url.searchParams.set("page", page); // &page=page
     console.log(url);
@@ -87,7 +87,11 @@ async function getNewsByKeyword() {
 }
 
 function pageNation() {
-  let pageNationHTML = "";
+  let pageNationHTML = `<li class="page-item">
+  <a class="page-link" href="#" aria-label="Previous" onclick="moveToPage(${page-1})">
+    <span aria-hidden="true">&lt;</span>
+  </a>
+</li>`;
   let pageGroup = Math.ceil(page / 5);
   let last = pageGroup * 5;
   let first = last - 4;
@@ -96,7 +100,20 @@ function pageNation() {
       page == i ? "active" : ""
     }"><a class="page-link" href="#" onclick="moveToPage(${i})">${i}</a></li>`;
   }
+  pageNationHTML += `<li class="page-item">
+  <a class="page-link" href="#" aria-label="Next" onclick="moveToPage(${page+1})">
+    <span aria-hidden="true">&gt;</span>
+  </a>
+</li>`;
   document.querySelector(".pagination").innerHTML = pageNationHTML;
+  
+  /*  total page 3 일 경우 3개의 페이지만 프린트하는 법 last, first
+      << >> 버튼 만들기 맨처음, 맨 끝
+      내가 그룹1일 때 << < 버튼 안보이기
+      내가 마지막 그룹일때 > >> 버튼 안보이기
+   */
+  
+  
 }
 
 function moveToPage(pageNum) {
